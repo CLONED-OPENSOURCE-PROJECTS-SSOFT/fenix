@@ -23,6 +23,7 @@ import org.mozilla.fenix.helpers.ViewVisibilityIdlingResource
 import org.mozilla.fenix.ui.robots.clickUrlbar
 import org.mozilla.fenix.ui.robots.homeScreen
 import org.mozilla.fenix.ui.robots.navigationToolbar
+import org.mozilla.fenix.ui.robots.searchScreen
 
 /**
  * Test Suite that contains tests defined as part of the Smoke and Sanity check defined in Test rail.
@@ -107,6 +108,16 @@ class SmokeTest {
 
             // Start Browsing
             verifyStartBrowsingButton()
+        }
+    }
+
+    @Test
+    fun startBrowsingButtonTest() {
+        homeScreen {
+            verifyStartBrowsingButton()
+        }.dismissOnboarding()
+        searchScreen {
+            verifySearchView()
         }
     }
 
