@@ -19,6 +19,7 @@ import org.mozilla.fenix.helpers.AndroidAssetDispatcher
 import org.mozilla.fenix.helpers.HomeActivityTestRule
 import org.mozilla.fenix.helpers.RecyclerViewIdlingResource
 import org.mozilla.fenix.helpers.TestAssetHelper
+import org.mozilla.fenix.helpers.TestHelper
 import org.mozilla.fenix.helpers.ViewVisibilityIdlingResource
 import org.mozilla.fenix.ui.robots.clickUrlbar
 import org.mozilla.fenix.ui.robots.homeScreen
@@ -427,6 +428,28 @@ class SmokeTest {
             verifyPageContent(firstWebPage.content)
             swipeNavBarLeft(firstWebPage.url.toString())
             verifyPageContent(secondWebPage.content)
+        }
+    }
+
+    @Test
+    fun openSavedLoginWebPageTest() {
+        val saveLoginTest =
+            TestAssetHelper.getSaveLoginAsset(mockWebServer)
+
+        navigationToolbar {
+        }.enterURLAndEnterToBrowser(saveLoginTest.url) {
+            verifySaveLoginPromptIsShown()
+            // Click save to save the login
+            saveLoginFromPrompt("Save")
+        }.openThreeDotMenu {
+        }.openSettings {
+            TestHelper.scrollToElementByText("Logins and passwords")
+        }.openLoginsAndPasswordSubMenu {
+        }.openSavedLogins {
+            verifySecurityPromptForLogins()
+            tapSetupLater()
+            // Verify that the login appears correctly
+            verifySavedLoginFromPrompt()
         }
     }
 }

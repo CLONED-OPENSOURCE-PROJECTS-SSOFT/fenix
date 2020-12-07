@@ -312,7 +312,7 @@ class BrowserRobot {
     }
 
     fun verifySaveLoginPromptIsShown() {
-        mDevice.waitNotNull(Until.findObjects(text("test@example.com")), waitingTime)
+        mDevice.findObject(UiSelector().text("test@example.com")).waitForExists(waitingTime)
         val submitButton = mDevice.findObject(By.res("submit"))
         submitButton.clickAndWait(Until.newWindow(), waitingTime)
         // Click save to save the login

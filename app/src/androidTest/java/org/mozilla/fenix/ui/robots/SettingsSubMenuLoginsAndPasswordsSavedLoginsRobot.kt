@@ -22,7 +22,7 @@ import org.mozilla.fenix.helpers.ext.waitNotNull
  */
 
 class SettingsSubMenuLoginsAndPasswordsSavedLoginsRobot {
-    fun verifySavedLoginsView() = assertSavedLoginsView()
+    fun verifySecurityPromptForLogins() = assertSavedLoginsView()
 
     fun verifySavedLoginsAfterSync() {
         mDevice.waitNotNull(
@@ -61,3 +61,5 @@ private fun assertSavedLoginsView() =
         .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
 
 private fun assertSavedLoginAppears() = onView(ViewMatchers.withText("https://accounts.google.com"))
+
+
