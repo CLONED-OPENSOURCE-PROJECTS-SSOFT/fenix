@@ -9,6 +9,7 @@ package org.mozilla.fenix.ui.robots
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.EditText
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions
@@ -42,6 +43,7 @@ import org.mozilla.fenix.helpers.TestAssetHelper
 import org.mozilla.fenix.helpers.TestAssetHelper.waitingTime
 import org.mozilla.fenix.helpers.click
 import org.mozilla.fenix.helpers.ext.waitNotNull
+
 
 class BrowserRobot {
     fun verifyCurrentPrivateSession(context: Context) {
@@ -82,7 +84,11 @@ class BrowserRobot {
             Until.findObject(By.res("org.mozilla.fenix.debug:id/engineView")),
             waitingTime
         )
-        assertTrue(mDevice.findObject(UiSelector().textContains(expectedText)).waitForExists(waitingTime))
+        assertTrue(
+            mDevice.findObject(UiSelector().textContains(expectedText)).waitForExists(
+                waitingTime
+            )
+        )
     }
 
     fun verifyTabCounter(expectedText: String) {
@@ -319,8 +325,25 @@ class BrowserRobot {
         mDevice.waitNotNull(Until.findObjects(text("Save")))
     }
 
+    fun verifyUpdateLoginPromptIsShown() {
+        val submitButton = mDevice.findObject(By.res("submit"))
+        submitButton.clickAndWait(Until.newWindow(), waitingTime)
+
+        mDevice.waitNotNull(Until.findObjects(text("Update")))
+    }
+
     fun saveLoginFromPrompt(optionToSaveLogin: String) {
         mDevice.findObject(text(optionToSaveLogin)).click()
+    }
+
+    fun enterPassword(password: String) {
+        val passwordField = mDevice.findObject(
+            UiSelector()
+                .resourceId("password")
+                .className(EditText::class.java)
+        )
+        passwordField.waitForExists(waitingTime)
+        passwordField.setText(password)
     }
 
     fun clickMediaPlayerPlayButton() {

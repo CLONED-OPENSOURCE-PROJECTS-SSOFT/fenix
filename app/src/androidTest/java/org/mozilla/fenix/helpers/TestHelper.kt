@@ -32,6 +32,10 @@ import org.mozilla.fenix.helpers.ext.waitNotNull
 import org.mozilla.fenix.ui.robots.mDevice
 
 object TestHelper {
+    // Variable used to store currently running package name.
+    // Use this to replace hardcoded package name in UIAutomator matchers
+    val packageName = InstrumentationRegistry.getInstrumentation().targetContext.packageName
+
     fun scrollToElementByText(text: String): UiScrollable {
         val appView = UiScrollable(UiSelector().scrollable(true))
         appView.scrollTextIntoView(text)

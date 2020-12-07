@@ -432,7 +432,7 @@ class SmokeTest {
     }
 
     @Test
-    fun openSavedLoginWebPageTest() {
+    fun updateSavedLoginTest() {
         val saveLoginTest =
             TestAssetHelper.getSaveLoginAsset(mockWebServer)
 
@@ -441,6 +441,12 @@ class SmokeTest {
             verifySaveLoginPromptIsShown()
             // Click save to save the login
             saveLoginFromPrompt("Save")
+        }.openNavigationToolbar {
+        }.enterURLAndEnterToBrowser(saveLoginTest.url) {
+            enterPassword("test")
+            verifyUpdateLoginPromptIsShown()
+            // Click Update to change the saved password
+            saveLoginFromPrompt("Update")
         }.openThreeDotMenu {
         }.openSettings {
             TestHelper.scrollToElementByText("Logins and passwords")
@@ -450,6 +456,9 @@ class SmokeTest {
             tapSetupLater()
             // Verify that the login appears correctly
             verifySavedLoginFromPrompt()
+            viewSavedLoginDetails()
+            revealPassword()
+            verifyPasswordSaved("test")
         }
     }
 }
